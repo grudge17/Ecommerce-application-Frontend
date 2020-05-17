@@ -1,7 +1,7 @@
 import React,{useState} from 'react'//for state object as ith grabs value from form
 import {Redirect} from 'react-router-dom'
 import Layout from '../core/Layout'
-import {signin,aunthenticate} from '../auth/index'
+import {signin,aunthenticate,isAuthenticated} from '../auth/index'
 const Signin=()=> {
     const [values,setValues]=useState({
         email:"",
@@ -12,6 +12,7 @@ const Signin=()=> {
     })
 
     const{email,password,error,loading,redirectToReferrer}=values
+    const{user}=isAuthenticated()
 
 const handleChange=name=>event=>{//one fuction returning another function
 setValues({...values,error:false,[name]:event.target.value})
@@ -64,6 +65,7 @@ const showError=()=>(
         {error}
     </div>
 )
+
 const showLoading=()=>(
     loading && (
         <div className="alert alert-info">
@@ -71,10 +73,20 @@ const showLoading=()=>(
         </div>
     )
 )
+
 const redirectUser=()=>{
-    if(redirectToReferrer)
-    return <Redirect to="/" />
+    if(redirectToReferrer){
+      if(user && user.role===1){
+        return <Redirect to="/admin/dashboard" />
+      }else{
+        return <Redirect to="/user/dashboard" />
+      }
 }
+if(isAuthenticated()){
+    return <Redirect to='/' />
+}
+}
+
     return(
     <Layout 
     title="Signin" 
