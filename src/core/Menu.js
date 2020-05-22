@@ -23,6 +23,14 @@ const Menu=({history})=>( //ul-unordered list
                   Home
               </Link>
           </li>
+          <li className="nav-item">
+              <Link 
+              className="nav-link" 
+              style={isActive(history,'/shop')} 
+              to="/shop">
+                  Shop
+              </Link>
+          </li>
           {isAuthenticated() && isAuthenticated().user.role===0 && (
               <li className="nav-item">
               <Link 
