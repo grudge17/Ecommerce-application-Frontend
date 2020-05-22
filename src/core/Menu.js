@@ -1,6 +1,7 @@
 import React,{Fragment} from 'react'
 import {Link,withRouter} from 'react-router-dom'
 import {signout,isAuthenticated} from '../auth/index'
+import{itemTotal} from './cartHelpers'
 
 //we want to highlight the tabs on which we actually are
 const isActive=(history,path)=>{ //history is where we have been,the one to highlight and path is the actaul path we will provide
@@ -29,6 +30,14 @@ const Menu=({history})=>( //ul-unordered list
               style={isActive(history,'/shop')} 
               to="/shop">
                   Shop
+              </Link>
+          </li>
+          <li className="nav-item">
+              <Link 
+              className="nav-link" 
+              style={isActive(history,'/cart')} 
+              to="/cart">
+                  Cart <sup><small className="cart-badge">{itemTotal()}</small></sup>
               </Link>
           </li>
           {isAuthenticated() && isAuthenticated().user.role===0 && (
